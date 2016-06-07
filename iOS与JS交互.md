@@ -31,16 +31,14 @@ WKWebView准备工作
 </pre></code>
 例如我们现在约定使用sendInfoModel这个对象,那么:
 - OC中,给JS注入对象:
-<pre><code>
-[config.userContentController addScriptMessageHandler:self name:@"sendInfoModel"];
+<pre><code>[config.userContentController addScriptMessageHandler:self name:@"sendInfoModel"];
 </pre></code>
 - JS中,使用对象:
 这是JS的一个传值操作,通过body来传值。
-<pre><code>
-window.webkit.messageHandlers.sendInfoModel.postMessage({body: 'JS要传值'});
+<pre><code>window.webkit.messageHandlers.sendInfoModel.postMessage({body: 'JS要传值'});
 </pre></code>
 - 当JS通过sendInfoModel传值的时候,在iOS端,我们在下面的这个代理中接受结果:
-<pre><code>- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
+<pre><code>-(void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
 //首先判断一下是哪个对象(我们可以注入多个不同的对象,来进行不同的操作)
 
 if ([message.name isEqualToString:@"sendInfoModel"]) {
@@ -149,8 +147,7 @@ WKUIDelegate
 与JS原生的alert,confirm,prompt进行交互:
 - alert :
 JS中:
-<pre><code>
-function callJsAlert() {
+<pre><code>function callJsAlert() {
 alert('这个是OC调用JS的方法,并且通过Alert()进行显示出来!');
 
 window.webkit.messageHandlers.sendInfoModel.postMessage({body: '在JS中调用JS alert中方法'});
